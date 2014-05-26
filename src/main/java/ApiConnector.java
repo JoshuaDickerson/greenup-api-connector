@@ -25,7 +25,7 @@ import java.net.URISyntaxException;
  * Created by josh on 5/26/14.
  */
 public class ApiConnector {
-    public PagedList<Comment> getPagedComments(URI uri){
+    public PagedList getPagedData(URI uri){
         CloseableHttpClient httpClient = HttpClients.createDefault();
         try {
             HttpContext defaultContext = new BasicHttpContext();
@@ -33,7 +33,7 @@ public class ApiConnector {
             HttpGet get = new HttpGet(uri);
             CloseableHttpResponse response = httpClient.execute(get, context);
             String responseBody = getBodyFromEntity(response.getEntity());
-            return ResponseMapper.mapResponseToCommentList(responseBody);
+            return ResponseMapper.mapResponseToPagedList(responseBody);
         } catch (ClientProtocolException e) {
             e.printStackTrace();
             return null;
