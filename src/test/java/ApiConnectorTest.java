@@ -1,7 +1,4 @@
-import model.Comment;
-import model.Heatpoint;
-import model.PagedList;
-import model.Pin;
+import model.*;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -21,7 +18,7 @@ public class ApiConnectorTest {
 
     @Test
     public void testGetComments() throws URISyntaxException {
-        URI uri = new URI("http://greenup.xenonapps.com:31337/api/comments");
+        URI uri = new URI(Constants.API_URL.comments);
         PagedList<Comment> results = apiConnector.getPagedData(uri);
         // all comments must be associated with a type
         MatcherAssert.assertThat(results.getWrapped().get(0).getType(), notNullValue());
@@ -29,7 +26,7 @@ public class ApiConnectorTest {
 
     @Test
     public void testGetHeatmap() throws URISyntaxException {
-        URI uri = new URI("http://greenup.xenonapps.com:31337/api/heatmap");
+        URI uri = new URI(Constants.API_URL.heatmaps);
         PagedList<Heatpoint> results = apiConnector.getPagedData(uri);
         // we make we have a heatmap point, and that it has a valid latitude
         MatcherAssert.assertThat(results.getWrapped().get(0).getLatDegrees(), notNullValue());
@@ -38,7 +35,7 @@ public class ApiConnectorTest {
 
     @Test
     public void testGetPins() throws URISyntaxException {
-        URI uri = new URI("http://greenup.xenonapps.com:31337/api/pins");
+        URI uri = new URI(Constants.API_URL.pins);
         PagedList<Pin> results = apiConnector.getPagedData(uri);
         MatcherAssert.assertThat(results.getWrapped().get(0).getLatDegrees(), notNullValue());
         MatcherAssert.assertThat(results.getWrapped().get(0).getLatDegrees(), not(0f));

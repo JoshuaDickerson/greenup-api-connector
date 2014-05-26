@@ -1,5 +1,7 @@
 package model;
 
+import static model.Constants.*;
+
 /**
  * Created by josh on 5/26/14.
  */
@@ -7,7 +9,7 @@ public class Pin {
     private long id;
     private float latDegrees;
     private float lonDegrees;
-    private Constants.COMMENT_TYPE type;
+    private COMMENT_TYPE type;
     private String message;
     private boolean addressed;
 
@@ -35,11 +37,11 @@ public class Pin {
         this.lonDegrees = lonDegrees;
     }
 
-    public Constants.COMMENT_TYPE getType() {
+    public COMMENT_TYPE getType() {
         return type;
     }
 
-    public void setType(Constants.COMMENT_TYPE type) {
+    public void setType(COMMENT_TYPE type) {
         this.type = type;
     }
 

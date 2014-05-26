@@ -18,4 +18,10 @@ public class Constants {
             return value;
         }
     }
+
+    public static class API_URL {
+        public static String comments = "http://greenup.xenonapps.com:31337/api/comments";
+        public static String heatmaps = "http://greenup.xenonapps.com:31337/api/heatmap";
+        public static String pins = "http://greenup.xenonapps.com:31337/api/pins";
+    }
 }

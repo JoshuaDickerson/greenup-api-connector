@@ -1,5 +1,7 @@
 import helper.ResponseMapper;
+import model.ApiResponse;
 import model.Comment;
+import model.Heatpoint;
 import model.PagedList;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -20,11 +22,13 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 /**
  * Created by josh on 5/26/14.
  */
 public class ApiConnector {
+    // here's a generic class for getting all of our paged data (heatmaps, pins, comments)
     public PagedList getPagedData(URI uri){
         CloseableHttpClient httpClient = HttpClients.createDefault();
         try {
@@ -34,10 +38,7 @@ public class ApiConnector {
             CloseableHttpResponse response = httpClient.execute(get, context);
             String responseBody = getBodyFromEntity(response.getEntity());
             return ResponseMapper.mapResponseToPagedList(responseBody);
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         } finally {
@@ -49,6 +50,13 @@ public class ApiConnector {
         }
     }
 
+    public ApiResponse postHeatmapData(List<Heatpoint> points){
+        return null;
+    }
+
+
+
+    // utility method to get the string body
     private String getBodyFromEntity(HttpEntity entity){
         try {
             StringWriter writer = new StringWriter();
