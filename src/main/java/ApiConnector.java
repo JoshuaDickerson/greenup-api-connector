@@ -1,3 +1,4 @@
+import helper.ResponseMapper;
 import model.Comment;
 import model.PagedList;
 import org.apache.commons.io.IOUtils;
@@ -24,7 +25,7 @@ import java.net.URISyntaxException;
  * Created by josh on 5/26/14.
  */
 public class ApiConnector {
-    public static PagedList<Comment> getPagesComments(URI uri){
+    public PagedList<Comment> getPagedComments(URI uri){
         CloseableHttpClient httpClient = HttpClients.createDefault();
         try {
             HttpContext defaultContext = new BasicHttpContext();
@@ -32,11 +33,13 @@ public class ApiConnector {
             HttpGet get = new HttpGet(uri);
             CloseableHttpResponse response = httpClient.execute(get, context);
             String responseBody = getBodyFromEntity(response.getEntity());
-
+            return ResponseMapper.mapResponseToCommentList(responseBody);
         } catch (ClientProtocolException e) {
             e.printStackTrace();
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         } finally {
             try {
                 httpClient.close();
@@ -44,12 +47,9 @@ public class ApiConnector {
                 // todo: log error
             }
         }
-
-
-
     }
 
-    private static String getBodyFromEntity(HttpEntity entity){
+    private String getBodyFromEntity(HttpEntity entity){
         try {
             StringWriter writer = new StringWriter();
             IOUtils.copy(entity.getContent(), writer);
