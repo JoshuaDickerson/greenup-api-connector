@@ -1,6 +1,7 @@
 import model.Comment;
 import model.Heatpoint;
 import model.PagedList;
+import model.Pin;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -31,6 +32,14 @@ public class ApiConnectorTest {
         URI uri = new URI("http://greenup.xenonapps.com:31337/api/heatmap");
         PagedList<Heatpoint> results = apiConnector.getPagedData(uri);
         // we make we have a heatmap point, and that it has a valid latitude
+        MatcherAssert.assertThat(results.getWrapped().get(0).getLatDegrees(), notNullValue());
+        MatcherAssert.assertThat(results.getWrapped().get(0).getLatDegrees(), not(0f));
+    }
+
+    @Test
+    public void testGetPins() throws URISyntaxException {
+        URI uri = new URI("http://greenup.xenonapps.com:31337/api/pins");
+        PagedList<Pin> results = apiConnector.getPagedData(uri);
         MatcherAssert.assertThat(results.getWrapped().get(0).getLatDegrees(), notNullValue());
         MatcherAssert.assertThat(results.getWrapped().get(0).getLatDegrees(), not(0f));
     }

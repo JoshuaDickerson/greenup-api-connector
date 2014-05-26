@@ -16,9 +16,14 @@ public class ResponseMapper {
         return gson.fromJson(json, new TypeToken<PagedComments<Comment>>(){}.getType());
     }
 
-    private static PagedList mapResponseToHeatpointList(String json) {
+    private static PagedList<Comment> mapResponseToHeatpointList(String json) {
         Gson gson = new Gson();
         return gson.fromJson(json, new TypeToken<PagedHeatpoints<Heatpoint>>(){}.getType());
+    }
+
+    private static PagedList<Pin> mapResponseToPinList(String json){
+        Gson gson = new Gson();
+        return gson.fromJson(json, new TypeToken<PagedPins<Pin>>(){}.getType());
     }
 
     public static PagedList mapResponseToPagedList(String responseBody) {
@@ -26,6 +31,8 @@ public class ResponseMapper {
             return mapResponseToCommentList(responseBody);
         }else if(responseBody.toLowerCase().contains("grid")){
             return mapResponseToHeatpointList(responseBody);
+        }else if(responseBody.toLowerCase().contains("pins")){
+            return mapResponseToPinList(responseBody);
         }
         return null;
     }
